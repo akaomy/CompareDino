@@ -54,22 +54,19 @@ const compareByDiet = (dinoName, dinoDiet, humanName, humanDiet) => {
 
 compareBtn.addEventListener('click', function() {
     let userName = document.getElementById('name').value;
-
+    let userWeight = document.getElementById('weight').value;
+    let userDiet = document.getElementById('diet').value;
     // convert userFeet into inches and add it to userInches
     let userFeet = document.getElementById('feet').value;
     let userInches = document.getElementById('inches').value;
     let userHeightInInches = (userFeet * 12) + parseInt(userInches);
 
-    let userWeight = document.getElementById('weight').value;
-
-    let userDiet = document.getElementById('diet').value;
-
     // create a new human object to display on the page
-    let humanInfo = Human(userName, userHeightInInches, userWeight, userDiet);
+    let humanInfo = Human(userName, userHeightInInches, parseInt(userWeight), userDiet);
 
     compareByWeight('Dino', 100, userName, userWeight);
     compareByHeight('Dino', 120, userName, userHeightInInches);
     compareByDiet('Dino', 'carnivor', userName, userDiet);
-    
+
     grid.appendChild(gridItem);
 });
