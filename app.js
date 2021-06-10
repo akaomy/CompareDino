@@ -10,7 +10,7 @@ const gridItem = document.createElement('div');
 gridItem.className = 'grid-item';
 
 // Create Dino Constructor
-function Dino (species, weight, height, diet) {
+function Dino(species, weight, height, diet) {
     return {
         species,
         weight,
@@ -20,7 +20,7 @@ function Dino (species, weight, height, diet) {
 }
 
 // Create Human Object
-function Human (name, height, weight, diet) {
+function Human(name, height, weight, diet) {
     return {
         name,
         height,
@@ -62,11 +62,14 @@ compareBtn.addEventListener('click', function() {
 
     let userWeight = document.getElementById('weight').value;
 
+    let userDiet = document.getElementById('diet').value;
+
     // create a new human object to display on the page
+    let humanInfo = Human(userName, userHeightInInches, userWeight, userDiet);
 
     compareByWeight('Dino', 100, userName, userWeight);
     compareByHeight('Dino', 120, userName, userHeightInInches);
-    compareByDiet('Dino', 'carnivor', userName, 'herbavor');
+    compareByDiet('Dino', 'carnivor', userName, userDiet);
     
     grid.appendChild(gridItem);
 });
