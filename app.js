@@ -60,10 +60,13 @@ compareBtn.addEventListener('click', function() {
     let userInches = document.getElementById('inches').value;
     let userHeightInInches = (userFeet * 12) + parseInt(userInches);
 
+    let userWeight = document.getElementById('weight').value;
 
-    compareByWeight('Dino', 100, userName, 25);
+    // create a new human object to display on the page
+
+    compareByWeight('Dino', 100, userName, userWeight);
     compareByHeight('Dino', 120, userName, userHeightInInches);
-    compareByDiet('Dino', 'carnivor', 'human', 'herbavor');
+    compareByDiet('Dino', 'carnivor', userName, 'herbavor');
     
     grid.appendChild(gridItem);
 });
