@@ -4,6 +4,7 @@
 // generate 3x3 grid of tiles with human in the center
 // each tile has an image, specie's name and a fact
 // for human tile => name and no fact
+
 const compareBtn = document.getElementById('btn');
 const grid = document.getElementById('grid');
 const gridItem = document.createElement('div');
@@ -50,7 +51,9 @@ const compareByDiet = (dinoName, dinoDiet, humanName, humanDiet) => {
 }
 
 // todo
-// get user input and put it into a new human object
+// [+] get user input and put it into a new human object
+// generate 8 different dinos based on dino.json data
+
 
 compareBtn.addEventListener('click', function() {
     let userName = document.getElementById('name').value;
@@ -67,6 +70,7 @@ compareBtn.addEventListener('click', function() {
     compareByWeight('Dino', 100, userName, userWeight);
     compareByHeight('Dino', 120, userName, userHeightInInches);
     compareByDiet('Dino', 'carnivor', userName, userDiet);
+
 
     grid.appendChild(gridItem);
 });
