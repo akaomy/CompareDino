@@ -5,6 +5,9 @@
 // each tile has an image, specie's name and a fact
 // for human tile => name and no fact
 const compareBtn = document.getElementById('btn');
+const grid = document.getElementById('grid');
+const gridItem = document.createElement('div');
+gridItem.className = 'grid-item';
 
 // Create Dino Constructor
 function Dino (species, weight, height, diet) {
@@ -33,17 +36,34 @@ const compareByWeight = (dinoName, dinoWeight, humanName, humanWeight) => {
 }
 
 const compareByHeight = (dinoName, dinoHeight, humanName, humanHeight) => {
+    // Dino's height in inches
     const times = dinoHeight / humanHeight;
-    console.log(`${dinoName} is heavier ${times} times than ${humanName}`);
+    if (dinoHeight > humanHeight) {
+        console.log(`${dinoName} is heavier ${times} times than ${humanName}`);
+    } else {
+        console.log(`${dinoName} is lighter ${times} times than ${humanName}`);
+    }
 }
 
 const compareByDiet = (dinoName, dinoDiet, humanName, humanDiet) => {
     console.log(`${dinoName} is ${dinoDiet} and ${humanName} is ${humanDiet}`);
 }
 
+// todo
+// get user input and put it into a new human object
+
 compareBtn.addEventListener('click', function() {
-    compareByWeight('Dino', 100, 'human', 25);
-    compareByHeight('Dino', 120, 'human', 20);
+    let userName = document.getElementById('name').value;
+
+    // convert userFeet into inches and add it to userInches
+    let userFeet = document.getElementById('feet').value;
+    let userInches = document.getElementById('inches').value;
+    let userHeightInInches = (userFeet * 12) + parseInt(userInches);
+
+
+    compareByWeight('Dino', 100, userName, 25);
+    compareByHeight('Dino', 120, userName, userHeightInInches);
     compareByDiet('Dino', 'carnivor', 'human', 'herbavor');
     
+    grid.appendChild(gridItem);
 });
