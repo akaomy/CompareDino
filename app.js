@@ -82,9 +82,7 @@ const dinosData = {
 }
 
 const compareBtn = document.getElementById('btn');
-const grid = document.getElementById('grid');
-const gridItem = document.createElement('div');
-// gridItem.className = 'grid-item'; //doesn't work
+
 
 // Create Dino Constructor
 function Dino(species, weight, height, diet) {
@@ -110,9 +108,9 @@ const compareByWeight = (dinoName, dinoWeight, humanName, humanWeight) => {
     // Dino's weight in lbs
     const times = dinoWeight / humanWeight;
     dinoWeight > humanWeight ? 
-    console.log(`${dinoName} is heavier ${times} times than ${humanName}`) : 
-    console.log(`${dinoName} is heavier ${times} times than ${humanName}`)
-}
+        console.log(`${dinoName} is heavier ${times} times than ${humanName}`) : 
+        console.log(`${dinoName} is heavier ${times} times than ${humanName}`)
+    }
 
 const compareByHeight = (dinoName, dinoHeight, humanName, humanHeight) => {
     // Dino's height in inches
@@ -141,11 +139,22 @@ const getHumanInput = () => {
     return { userName, userWeight, userDiet }
 }
 
-compareBtn.addEventListener('click', function() {
-    let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
+const generateCards = () => {
+    const grid = document.getElementById('grid');
+    const gridItem = document.createElement('div');
+    gridItem.className = 'grid-item'; //doesn't work
+    for (let i = 0; i < 9; i ++) {
+        console.log(gridItem);
+    }
+}
+// todo generate tiles on the page
 
-    compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, getHumanInput().userName, getHumanInput().userWeight);
-    compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, getHumanInput().userName, calcUserHeightInInches());
-    compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, getHumanInput().userName, getHumanInput().userDiet);
-    
+compareBtn.addEventListener('click', function() {
+    // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
+
+    // compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, getHumanInput().userName, getHumanInput().userWeight);
+    // compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, getHumanInput().userName, calcUserHeightInInches());
+    // compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, getHumanInput().userName, getHumanInput().userDiet);
+    generateCards();
+
 });
