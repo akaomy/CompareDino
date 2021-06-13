@@ -133,15 +133,19 @@ const calcUserHeightInInches = () => {
     
 }
 
-compareBtn.addEventListener('click', function() {
+const getHumanInput = () => {
     let userName = document.getElementById('name').value;
     let userWeight = document.getElementById('weight').value;
     let userDiet = document.getElementById('diet').value;
 
-    let humanInfo = Human(userName, calcUserHeightInInches(), parseInt(userWeight), userDiet);
+    return { userName, userWeight, userDiet }
+}
 
-    compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, userName, userWeight);
-    compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, userName, calcUserHeightInInches());
-    compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, userName, userDiet);
+compareBtn.addEventListener('click', function() {
+    let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
+
+    compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, getHumanInput().userName, getHumanInput().userWeight);
+    compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, getHumanInput().userName, calcUserHeightInInches());
+    compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, getHumanInput().userName, getHumanInput().userDiet);
     
 });
