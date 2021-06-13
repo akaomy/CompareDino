@@ -81,8 +81,6 @@ const dinosData = {
     ]
 }
 
-const compareBtn = document.getElementById('btn');
-
 // Create Dino Constructor
 function Dino(species, weight, height, diet) {
     return {
@@ -103,24 +101,24 @@ function Human(name, height, weight, diet) {
     }
 }
 
-const compareByWeight = (dinoName, dinoWeight, humanName, humanWeight) => {
+const compareByWeight = (dino, humanName, humanWeight) => {
     // Dino's weight in lbs
-    const times = dinoWeight / humanWeight;
-    dinoWeight > humanWeight ? 
-        console.log(`${dinoName} is heavier ${times} times than ${humanName}`) : 
-        console.log(`${dinoName} is heavier ${times} times than ${humanName}`)
+    const times = dino.weight / humanWeight;
+    dino.weight > humanWeight ? 
+        console.log(`${dino.species} is heavier ${times} times than ${humanName}`) : 
+        console.log(`${dino.species} is heavier ${times} times than ${humanName}`)
 }
 
-const compareByHeight = (dinoName, dinoHeight, humanName, humanHeight) => {
+const compareByHeight = (dino, humanName, humanHeight) => {
     // Dino's height in inches
-    const times = dinoHeight / humanHeight;
-    dinoHeight > humanHeight ?
-        console.log(`${dinoName} is higher ${times} times than ${humanName}`) :
-        console.log(`${dinoName} is lower ${times} times than ${humanName}`);
+    const times = dino.height / humanHeight;
+    dino.height > humanHeight ?
+        console.log(`${dino.name} is higher ${times} times than ${humanName}`) :
+        console.log(`${dino.name} is lower ${times} times than ${humanName}`);
 }
 
-const compareByDiet = (dinoName, dinoDiet, humanName, humanDiet) => {
-    console.log(`${dinoName} is ${dinoDiet} and ${humanName} is ${humanDiet}`);
+const compareByDiet = (dino, humanName, humanDiet) => {
+    console.log(`${dino.name} is ${dino.diet} and ${humanName} is ${humanDiet}`);
 }
 
 const calcUserHeightInInches = () => {
@@ -130,21 +128,18 @@ const calcUserHeightInInches = () => {
     
 }
 
-const createHuman = (usrName, usrWeight, usrDiet) => {
+const getUserInput = () => {
     let userName = document.getElementById('name').value;
     let userWeight = document.getElementById('weight').value;
     let userDiet = document.getElementById('diet').value;
 
-//     let humanInfo = Human(userName, calcUserHeightInInches(), parseInt(userWeight), userDiet);
-
-//     return humanInfo; // {name: "", height: NaN, weight: NaN, diet: "Herbavor"}
     return { userName, userWeight, userDiet };
 }
 
-const generateDinoCards = () => {
+// blin I gotta use those Dino and Human objects
+const generateCards = () => {
+    
     const grid = document.getElementById('grid');
-    // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
-
     for (let i = 0; i < 8; i ++) {
 
         const gridItem = document.createElement('div');
@@ -156,16 +151,17 @@ const generateDinoCards = () => {
         grid.appendChild(gridItem);
         gridItem.appendChild(img);
 
-        compareByWeight(dinosData.Dinos[i].species, dinosData.Dinos[i].weight, createHuman().userName, createHuman().userWeight);
-        compareByHeight(dinosData.Dinos[i].species, dinosData.Dinos[i].height, createHuman().userName, calcUserHeightInInches());
-        compareByDiet(dinosData.Dinos[i].species, dinosData.Dinos[i].diet, createHuman().userName, createHuman().userDiet);
+        // compare objects here
+        // const human = Human(getUserInput().userName, calcUserHeightInInches(), parseInt((getUserInput().weight)), getUserInput().diet);
+        const dino = Dino(dinosData.Dinos[i].species, dinosData.Dinos[i].weight, dinosData.Dinos[i].height, dinosData.Dinos[i].diet);
+        // fix it console.log(human);
+        // console.log(dino);
+        compareByWeight(dino, getUserInput().userName, getUserInput().userWeight);
+        compareByHeight(dino, getUserInput().userName, calcUserHeightInInches()); // doesn't show the name
+        compareByDiet(dino, getUserInput().userName, getUserInput().userDiet); // doesn't show the name
     }
 
 }
 
-compareBtn.addEventListener('click', function() {
-    // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
-
-    generateDinoCards();
-
-});
+const compareBtn = document.getElementById('btn');
+compareBtn.addEventListener('click', function() { generateCards() });
