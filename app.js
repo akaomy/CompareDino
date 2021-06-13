@@ -81,7 +81,6 @@ const dinosData = {
     ]
 }
 
-// Create Dino Constructor
 function Dino(species, weight, height, diet) {
     return {
         species,
@@ -91,7 +90,6 @@ function Dino(species, weight, height, diet) {
     }
 }
 
-// Create Human Object
 function Human(name, height, weight, diet) {
     return {
         name,
@@ -101,24 +99,24 @@ function Human(name, height, weight, diet) {
     }
 }
 
-const compareByWeight = (dino, humanName, humanWeight) => {
+const compareByWeight = (dino, human) => {
     // Dino's weight in lbs
-    const times = dino.weight / humanWeight;
-    dino.weight > humanWeight ? 
-        console.log(`${dino.species} is heavier ${times} times than ${humanName}`) : 
-        console.log(`${dino.species} is heavier ${times} times than ${humanName}`)
+    const times = dino.weight / human.weight;
+    dino.weight > human.weight ? 
+        console.log(`${dino.species} is heavier ${times} times than ${human.name}`) : 
+        console.log(`${dino.species} is heavier ${times} times than ${human.name}`)
 }
 
-const compareByHeight = (dino, humanName, humanHeight) => {
+const compareByHeight = (dino, human) => {
     // Dino's height in inches
-    const times = dino.height / humanHeight;
-    dino.height > humanHeight ?
-        console.log(`${dino.name} is higher ${times} times than ${humanName}`) :
-        console.log(`${dino.name} is lower ${times} times than ${humanName}`);
+    const times = dino.height / human.height;
+    dino.height > human.height ?
+        console.log(`${dino.name} is higher ${times} times than ${human.name}`) :
+        console.log(`${dino.name} is lower ${times} times than ${human.name}`);
 }
 
-const compareByDiet = (dino, humanName, humanDiet) => {
-    console.log(`${dino.name} is ${dino.diet} and ${humanName} is ${humanDiet}`);
+const compareByDiet = (dino, human) => {
+    console.log(`${dino.name} is ${dino.diet} and ${human.name} is ${human.diet}`);
 }
 
 const calcUserHeightInInches = () => {
@@ -128,18 +126,19 @@ const calcUserHeightInInches = () => {
     
 }
 
-const getUserInput = () => {
+// todo
+// [] untangle human and dino object from this function
+// [] add human's card into the grid
+// [] add info into the cards
+// fix undefined instead of dino's name
+const generateCards = () => {
+    const grid = document.getElementById('grid');
     let userName = document.getElementById('name').value;
     let userWeight = document.getElementById('weight').value;
     let userDiet = document.getElementById('diet').value;
 
-    return { userName, userWeight, userDiet };
-}
+    const human = Human(userName, calcUserHeightInInches(), parseInt(userWeight), userDiet);
 
-// blin I gotta use those Dino and Human objects
-const generateCards = () => {
-    
-    const grid = document.getElementById('grid');
     for (let i = 0; i < 8; i ++) {
 
         const gridItem = document.createElement('div');
@@ -151,14 +150,13 @@ const generateCards = () => {
         grid.appendChild(gridItem);
         gridItem.appendChild(img);
 
-        // compare objects here
-        // const human = Human(getUserInput().userName, calcUserHeightInInches(), parseInt((getUserInput().weight)), getUserInput().diet);
         const dino = Dino(dinosData.Dinos[i].species, dinosData.Dinos[i].weight, dinosData.Dinos[i].height, dinosData.Dinos[i].diet);
-        // fix it console.log(human);
-        // console.log(dino);
-        compareByWeight(dino, getUserInput().userName, getUserInput().userWeight);
-        compareByHeight(dino, getUserInput().userName, calcUserHeightInInches()); // doesn't show the name
-        compareByDiet(dino, getUserInput().userName, getUserInput().userDiet); // doesn't show the name
+
+        console.log(human);
+        console.log(dino);
+        compareByWeight(dino, human);
+        compareByHeight(dino, human);
+        compareByDiet(dino, human);
     }
 
 }
