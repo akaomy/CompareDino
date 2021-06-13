@@ -139,15 +139,19 @@ const getHumanInput = () => {
     return { userName, userWeight, userDiet }
 }
 
-const generateCards = () => {
+const generateDinoCards = () => {
     const grid = document.getElementById('grid');
-    const gridItem = document.createElement('div');
-    gridItem.className = 'grid-item'; //doesn't work
-    for (let i = 0; i < 9; i ++) {
-        console.log(gridItem);
+    for (let i = 0; i < 8; i ++) {
+        const gridItem = document.createElement('div');
+        gridItem.className = 'grid-item';
+
+        const img = document.createElement("img");
+        img.src = `./images/${dinosData.Dinos[i].species}.png`;
+
+        grid.appendChild(gridItem);
+        gridItem.appendChild(img);
     }
 }
-// todo generate tiles on the page
 
 compareBtn.addEventListener('click', function() {
     // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
@@ -155,6 +159,6 @@ compareBtn.addEventListener('click', function() {
     // compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, getHumanInput().userName, getHumanInput().userWeight);
     // compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, getHumanInput().userName, calcUserHeightInInches());
     // compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, getHumanInput().userName, getHumanInput().userDiet);
-    generateCards();
+    generateDinoCards();
 
 });
