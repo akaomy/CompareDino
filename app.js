@@ -83,7 +83,6 @@ const dinosData = {
 
 const compareBtn = document.getElementById('btn');
 
-
 // Create Dino Constructor
 function Dino(species, weight, height, diet) {
     return {
@@ -110,7 +109,7 @@ const compareByWeight = (dinoName, dinoWeight, humanName, humanWeight) => {
     dinoWeight > humanWeight ? 
         console.log(`${dinoName} is heavier ${times} times than ${humanName}`) : 
         console.log(`${dinoName} is heavier ${times} times than ${humanName}`)
-    }
+}
 
 const compareByHeight = (dinoName, dinoHeight, humanName, humanHeight) => {
     // Dino's height in inches
@@ -131,17 +130,23 @@ const calcUserHeightInInches = () => {
     
 }
 
-const getHumanInput = () => {
+const createHuman = (usrName, usrWeight, usrDiet) => {
     let userName = document.getElementById('name').value;
     let userWeight = document.getElementById('weight').value;
     let userDiet = document.getElementById('diet').value;
 
-    return { userName, userWeight, userDiet }
+//     let humanInfo = Human(userName, calcUserHeightInInches(), parseInt(userWeight), userDiet);
+
+//     return humanInfo; // {name: "", height: NaN, weight: NaN, diet: "Herbavor"}
+    return { userName, userWeight, userDiet };
 }
 
 const generateDinoCards = () => {
     const grid = document.getElementById('grid');
+    // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
+
     for (let i = 0; i < 8; i ++) {
+
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
 
@@ -150,15 +155,17 @@ const generateDinoCards = () => {
 
         grid.appendChild(gridItem);
         gridItem.appendChild(img);
+
+        compareByWeight(dinosData.Dinos[i].species, dinosData.Dinos[i].weight, createHuman().userName, createHuman().userWeight);
+        compareByHeight(dinosData.Dinos[i].species, dinosData.Dinos[i].height, createHuman().userName, calcUserHeightInInches());
+        compareByDiet(dinosData.Dinos[i].species, dinosData.Dinos[i].diet, createHuman().userName, createHuman().userDiet);
     }
+
 }
 
 compareBtn.addEventListener('click', function() {
     // let humanInfo = Human(getHumanInput().userName, calcUserHeightInInches(), parseInt(getHumanInput().userWeight), getHumanInput().userDiet);
 
-    // compareByWeight(dinosData.Dinos[0].species, dinosData.Dinos[0].weight, getHumanInput().userName, getHumanInput().userWeight);
-    // compareByHeight(dinosData.Dinos[0].species, dinosData.Dinos[0].height, getHumanInput().userName, calcUserHeightInInches());
-    // compareByDiet(dinosData.Dinos[0].species, dinosData.Dinos[0].diet, getHumanInput().userName, getHumanInput().userDiet);
     generateDinoCards();
 
 });
