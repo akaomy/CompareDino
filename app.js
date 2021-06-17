@@ -134,6 +134,20 @@ const randomizeDinoFacts = (dino, human) => {
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
 
+const createCard = (data, randomFacts) => {
+    const gridItem = document.createElement('div');
+    gridItem.className = 'grid-item';
+    grid.appendChild(gridItem);
+
+    const dinoImg = document.createElement("img");
+    dinoImg.src = `./images/${data.species ? data.species : data.name}.png`;
+    gridItem.appendChild(dinoImg);
+
+    const itemLabel = document.createTextNode(randomFacts);
+    gridItem.appendChild(itemLabel); 
+
+    return gridItem;
+}
 
 document.getElementById('btn').addEventListener('click', function(e) { 
     e.preventDefault();
@@ -143,26 +157,15 @@ document.getElementById('btn').addEventListener('click', function(e) {
     const human = Human();    
     
     dinosData.Dinos.forEach(dino => {
+        createCard(dino, randomizeDinoFacts(dino, human));   
+    })
 
-        const gridItem = document.createElement('div');
-        gridItem.className = 'grid-item';
-        grid.appendChild(gridItem);
-
-        const dinoImg = document.createElement("img");
-        dinoImg.src = `./images/${dino.species}.png`;
-        gridItem.appendChild(dinoImg);
-
-        const itemLabel = document.createTextNode(randomizeDinoFacts(dino, human));
-        gridItem.appendChild(itemLabel);    
-
-        //get the array of grid-items
+     //get the array of grid-items
         // use splice()
         // let english1Gpa = [2.3, 2.80, 2.82];
         // let english2Gpa = [2.42, 2.47, 2.77];
         // let middleIndex = Math.floor(english1Gpa.length/2);
         // english1Gpa.splice(middleIndex, 0, ...english2Gpa);
-
-    })
     
     const cards = Array.from(document.getElementsByClassName('grid-item'))
     
