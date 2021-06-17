@@ -81,85 +81,80 @@ const dinosData = {
     ]
 }
 
-function Dino(species, weight, height, diet) {
+function Dino(species, weight, height, diet, fact) {
+
     return {
         species,
+        fact,
         weight,
         height,
-        diet
+        diet,
+        compareByWeight: function (human) {
+            const times = Math.round((this.weight / human.weight) * 10) / 10;
+            if (this.species === 'Pigeon') {
+                return "All birds are living dinosaurs."
+            } else {
+                let result = this.weight > human.weight ?
+                `${this.species} is heavier ${times} times than ${human.name}` :
+                `${this.species} is ligher ${times} times than ${human.name}`;
+                return result;
+            }
+        },
+        compareByHeight: function (human) {
+            const times = Math.round((this.height / human.height) * 10) / 10;
+            if (this.species === 'Pigeon') {
+                return "All birds are living dinosaurs."
+            } else {
+            let result = this.height > human.height ?
+                `${this.species} is higher ${times} times than ${human.name}` :
+                `${this.species} is shorter ${times} times than ${human.name}`;
+                return result;
+            }
+        },
+        compareByDiet: function (human) {
+            return `${this.species} is ${this.diet} and ${human.name} is ${human.diet.toLowerCase()}`;
+        }
     }
 }
 
-function Human(name, height, weight, diet) {
-    return {
-        name,
-        height,
-        weight,
-        diet
-    }
-}
-
-const compareByWeight = (dino, human) => {
-    // Dino's weight in lbs
-    const times = dino.weight / human.weight;
-    dino.weight > human.weight ? 
-        console.log(`${dino.species} is heavier ${times} times than ${human.name}`) : 
-        console.log(`${dino.species} is heavier ${times} times than ${human.name}`)
-}
-
-const compareByHeight = (dino, human) => {
-    // Dino's height in inches
-    const times = dino.height / human.height;
-    dino.height > human.height ?
-        console.log(`${dino.name} is higher ${times} times than ${human.name}`) :
-        console.log(`${dino.name} is lower ${times} times than ${human.name}`);
-}
-
-const compareByDiet = (dino, human) => {
-    console.log(`${dino.name} is ${dino.diet} and ${human.name} is ${human.diet}`);
-}
-
-const calcUserHeightInInches = () => {
-    let userFeet = document.getElementById('feet').value;
-    let userInches = document.getElementById('inches').value;
-    return (userFeet * 12) + parseInt(userInches);
+function Human() {
+    let name = document.getElementById('name').value;
+    let weight = document.getElementById('weight').value;
+    let diet = document.getElementById('diet').value;
+    let height = Math.round((parseInt(document.getElementById('feet').value) * 12) 
+    / parseInt(document.getElementById('inches').value)) ;
     
+    return { name, height, weight, diet } 
 }
 
-// todo
-// [] untangle human and dino object from this function
-// [] add human's card into the grid
-// [] add info into the cards
-// fix undefined instead of dino's name
-const generateCards = () => {
+document.getElementById('btn').addEventListener('click', function() { 
+
     const grid = document.getElementById('grid');
-    let userName = document.getElementById('name').value;
-    let userWeight = document.getElementById('weight').value;
-    let userDiet = document.getElementById('diet').value;
+    const human = Human();
+    // how to append human card in th emiddle of the gird?
+    const humanCard = document.createElement('div');
+    // gridItem.appendChild(human)
 
-    const human = Human(userName, calcUserHeightInInches(), parseInt(userWeight), userDiet);
+    dinosData.Dinos.forEach(dino => {
+        // randomize dino's facts
+        let dinosFactsArr = [];
+        let dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
+        dinosFactsArr.push(dinosaur.compareByWeight(human), dinosaur.compareByHeight(human), dinosaur.compareByDiet(human), dinosaur.fact);
+        let randomDinosFacts = dinosFactsArr[Math.floor(Math.random() * 4)];
 
-    for (let i = 0; i < 8; i ++) {
-
+        // create a card for each image
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
-
-        const img = document.createElement("img");
-        img.src = `./images/${dinosData.Dinos[i].species}.png`;
-
         grid.appendChild(gridItem);
-        gridItem.appendChild(img);
 
-        const dino = Dino(dinosData.Dinos[i].species, dinosData.Dinos[i].weight, dinosData.Dinos[i].height, dinosData.Dinos[i].diet);
+        const dinoImg = document.createElement("img");
+        dinoImg.src = `./images/${dino.species}.png`;
+        gridItem.appendChild(dinoImg);
 
-        console.log(human);
-        console.log(dino);
-        compareByWeight(dino, human);
-        compareByHeight(dino, human);
-        compareByDiet(dino, human);
-    }
+        // append random fact to the card's label
+        const itemLabel = document.createTextNode(randomDinosFacts);
+        gridItem.appendChild(itemLabel);    
 
-}
+    })
 
-const compareBtn = document.getElementById('btn');
-compareBtn.addEventListener('click', function() { generateCards() });
+});
