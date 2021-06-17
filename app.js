@@ -138,16 +138,12 @@ const randomizeDinoFacts = (dino, human) => {
 document.getElementById('btn').addEventListener('click', function(e) { 
     e.preventDefault();
     document.getElementById('dino-compare').style.display = 'none';
-    const grid = document.getElementById('grid');
-    const human = Human();
-    // todo: 
-    // [] how to append human card in th emiddle of the gird?
-    const humanCard = document.createElement('div');
 
-    // how to put dino + human in one array of objects (after brahiosauros)?
+    const grid = document.getElementById('grid');
+    const human = Human();    
+    
     dinosData.Dinos.forEach(dino => {
 
-        console.log('dino',dino)
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
         grid.appendChild(gridItem);
@@ -159,6 +155,29 @@ document.getElementById('btn').addEventListener('click', function(e) {
         const itemLabel = document.createTextNode(randomizeDinoFacts(dino, human));
         gridItem.appendChild(itemLabel);    
 
+        //get the array of grid-items
+        // use splice()
+        // let english1Gpa = [2.3, 2.80, 2.82];
+        // let english2Gpa = [2.42, 2.47, 2.77];
+        // let middleIndex = Math.floor(english1Gpa.length/2);
+        // english1Gpa.splice(middleIndex, 0, ...english2Gpa);
+
     })
+    
+    const cards = Array.from(document.getElementsByClassName('grid-item'))
+    
+    const humanCard = document.createElement('div');
+    humanCard.className = 'grid-item';
+
+    const humanImage = document.createElement('img')
+    humanImage.src = `./images/human.png`;
+    humanCard.appendChild(humanImage);
+
+    const humanLabel = document.createTextNode(human.name);
+    humanCard.appendChild(humanLabel);   
+    
+    console.log(grid.appendChild(humanCard));
+    // let middleIndex = Math.floor(cards.length / 2);
+    // let middleCard = cards.splice(middleIndex, 0, ...humanCard)
 
 });
