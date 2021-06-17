@@ -92,7 +92,7 @@ function Dino(species, weight, height, diet, fact) {
         compareByWeight: function (human) {
             const times = Math.round((this.weight / human.weight) * 10) / 10;
             if (this.species === 'Pigeon') {
-                return "All birds are living dinosaurs."
+                return `${this.fact}`
             } else {
                 let result = this.weight > human.weight ?
                 `${this.species} is heavier ${times} times than ${human.name}` :
@@ -103,7 +103,7 @@ function Dino(species, weight, height, diet, fact) {
         compareByHeight: function (human) {
             const times = Math.round((this.height / human.height) * 10) / 10;
             if (this.species === 'Pigeon') {
-                return "All birds are living dinosaurs."
+                return `${this.fact}`
             } else {
             let result = this.height > human.height ?
                 `${this.species} is higher ${times} times than ${human.name}` :
@@ -127,22 +127,27 @@ function Human() {
     return { name, height, weight, diet } 
 }
 
-document.getElementById('btn').addEventListener('click', function() { 
+const randomizeDinoFacts = (dino, human) => {
+    let dinosFactsArr = [];
+    let dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
+    dinosFactsArr.push(dinosaur.compareByWeight(human), dinosaur.compareByHeight(human), dinosaur.compareByDiet(human), dinosaur.fact);
+    return dinosFactsArr[Math.floor(Math.random() * 4)];
+}
 
+
+document.getElementById('btn').addEventListener('click', function(e) { 
+    e.preventDefault();
+    document.getElementById('dino-compare').style.display = 'none';
     const grid = document.getElementById('grid');
     const human = Human();
-    // how to append human card in th emiddle of the gird?
+    // todo: 
+    // [] how to append human card in th emiddle of the gird?
     const humanCard = document.createElement('div');
-    // gridItem.appendChild(human)
 
+    // how to put dino + human in one array of objects (after brahiosauros)?
     dinosData.Dinos.forEach(dino => {
-        // randomize dino's facts
-        let dinosFactsArr = [];
-        let dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
-        dinosFactsArr.push(dinosaur.compareByWeight(human), dinosaur.compareByHeight(human), dinosaur.compareByDiet(human), dinosaur.fact);
-        let randomDinosFacts = dinosFactsArr[Math.floor(Math.random() * 4)];
 
-        // create a card for each image
+        console.log('dino',dino)
         const gridItem = document.createElement('div');
         gridItem.className = 'grid-item';
         grid.appendChild(gridItem);
@@ -151,8 +156,7 @@ document.getElementById('btn').addEventListener('click', function() {
         dinoImg.src = `./images/${dino.species}.png`;
         gridItem.appendChild(dinoImg);
 
-        // append random fact to the card's label
-        const itemLabel = document.createTextNode(randomDinosFacts);
+        const itemLabel = document.createTextNode(randomizeDinoFacts(dino, human));
         gridItem.appendChild(itemLabel);    
 
     })
