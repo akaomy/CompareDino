@@ -137,7 +137,7 @@ const randomizeDinoFacts = (dino, human) => {
 const createCard = (data, randomFacts) => {
     const gridItem = document.createElement('div');
     gridItem.className = 'grid-item';
-    grid.appendChild(gridItem);
+    // grid.appendChild(gridItem);
 
     const dinoImg = document.createElement("img");
     dinoImg.src = `./images/${data.species ? data.species : data.name}.png`;
@@ -155,32 +155,20 @@ document.getElementById('btn').addEventListener('click', function(e) {
 
     const grid = document.getElementById('grid');
     const human = Human();    
-    
+
     dinosData.Dinos.forEach(dino => {
-        createCard(dino, randomizeDinoFacts(dino, human));   
+        createCard(dino, randomizeDinoFacts(dino, human));
     })
 
-     //get the array of grid-items
-        // use splice()
-        // let english1Gpa = [2.3, 2.80, 2.82];
-        // let english2Gpa = [2.42, 2.47, 2.77];
-        // let middleIndex = Math.floor(english1Gpa.length/2);
-        // english1Gpa.splice(middleIndex, 0, ...english2Gpa);
-    
     const cards = Array.from(document.getElementsByClassName('grid-item'))
-    
     const humanCard = document.createElement('div');
-    humanCard.className = 'grid-item';
-
     const humanImage = document.createElement('img')
+    humanCard.className = 'grid-item';
     humanImage.src = `./images/human.png`;
     humanCard.appendChild(humanImage);
 
-    const humanLabel = document.createTextNode(human.name);
-    humanCard.appendChild(humanLabel);   
-    
-    console.log(grid.appendChild(humanCard));
-    // let middleIndex = Math.floor(cards.length / 2);
-    // let middleCard = cards.splice(middleIndex, 0, ...humanCard)
+    cards.splice(4, 0, humanCard);
+
+    grid.appendChild(cards)    
 
 });
