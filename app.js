@@ -134,17 +134,22 @@ const randomizeDinoFacts = (dino, human) => {
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
 
-const createCard = (data, randomFacts) => {
+const createCard = (dino, randomFacts) => {
     const gridItem = document.createElement('div');
     gridItem.className = 'grid-item';
-    // grid.appendChild(gridItem);
+
+    const dinoName= document.createElement("h3");
+    dinoName.textContent= dino.species;
 
     const dinoImg = document.createElement("img");
-    dinoImg.src = `./images/${data.species ? data.species : data.name}.png`;
+    dinoImg.src = `./images/${dino.species ? dino.species : dino.name}.png`;
+    gridItem.appendChild(dinoName);
     gridItem.appendChild(dinoImg);
 
-    const itemLabel = document.createTextNode(randomFacts);
-    gridItem.appendChild(itemLabel); 
+    const itemLabel = randomFacts;
+    let fact = document.createElement("p")
+    fact.textContent = itemLabel;
+    gridItem.appendChild(fact); 
 
     return gridItem;
 }
@@ -154,21 +159,31 @@ document.getElementById('btn').addEventListener('click', function(e) {
     document.getElementById('dino-compare').style.display = 'none';
 
     const grid = document.getElementById('grid');
-    const human = Human();    
+    const human = Human();
+    let finalGrid = [];
 
-    dinosData.Dinos.forEach(dino => {
-        createCard(dino, randomizeDinoFacts(dino, human));
-    })
-
-    const cards = Array.from(document.getElementsByClassName('grid-item'))
     const humanCard = document.createElement('div');
-    const humanImage = document.createElement('img')
+    const humanImage = document.createElement('img');
+    const humanName = document.createElement('h3');
+
+    humanName.textContent = human.name;
     humanCard.className = 'grid-item';
     humanImage.src = `./images/human.png`;
+
+    humanCard.appendChild(humanName);
     humanCard.appendChild(humanImage);
 
-    cards.splice(4, 0, humanCard);
+    dinosData.Dinos.forEach((dino) => {
+        let gridItems = createCard(dino, randomizeDinoFacts(dino, human));
+        finalGrid.push(gridItems);
+    });
 
-    grid.appendChild(cards)    
+    const fragment = document.createDocumentFragment();
+    finalGrid.splice(4, 0, humanCard);
+    console.log(finalGrid);
+    for (item of finalGrid) {
+        fragment.appendChild(item);
+    }
+    grid.appendChild(fragment); 
 
 });
