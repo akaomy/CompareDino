@@ -1,6 +1,6 @@
 # CompareDino
-![Image](CompareDino1.png)
-![Image](CompareDino2.png)
+![Image](https://github.com/akaomy/CompareDino/blob/master/compareDino1.png)
+![Image](https://github.com/akaomy/CompareDino/blob/master/compareDino2.png)
 
 
 ## Project Description
