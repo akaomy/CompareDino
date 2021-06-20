@@ -89,18 +89,24 @@ function Dino(species, weight, height, diet, fact) {
         weight,
         height,
         diet,
+
         // compares dino's weight in lbs against user's weight in lbs
         compareByWeight: function (human) {
             const times = Math.round((this.weight / human.weight) * 10) / 10;
+
             if (this.species === 'Pigeon') {
                 return `${this.fact}`
+
             } else {
+
             const result = this.weight > human.weight ?
+
                 `${this.species} is heavier ${times} times than ${human.name}` :
                 `${this.species} is ligher ${times} times than ${human.name}`;
                 return result;
             }
         },
+
         // compares dino's height in inches against user's weight in inches
         compareByHeight: function (human) {
             const times = Math.round((this.height / human.height) * 10) / 10;
@@ -113,20 +119,23 @@ function Dino(species, weight, height, diet, fact) {
                 return result;
             }
         },
+
         // returns sentence that annonces dino's diet vs user's diet
         compareByDiet: function (human) {
+
             return `${this.species} is ${this.diet} and ${human.name} is ${human.diet.toLowerCase()}`;
         }
     }
 }
 
 function Human() {
+    // todo check for non empty inputs
     const name = document.getElementById('name').value;
     const weight = document.getElementById('weight').value;
     const diet = document.getElementById('diet').value;
     const height = Math.round((parseInt(document.getElementById('feet').value) * 12) 
     / parseInt(document.getElementById('inches').value)) ;
-    
+
     return { name, height, weight, diet } 
 }
 
@@ -136,6 +145,7 @@ function Human() {
 const randomizeDinoFacts = (dino, human) => {
     let dinosFactsArr = [];
     dinosFactsArr.push(dino.compareByWeight(human), dino.compareByHeight(human), dino.compareByDiet(human), dino.fact);
+
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
 
@@ -145,15 +155,15 @@ const createCard = (item, randomFacts = '') => {
     const dinoName = document.createElement('h3');
     const itemLabel = randomFacts;
     const fact = document.createElement('p');
-
     // checks if it's a human and not a dino
     let name = undefined;
+
     'name' in item ? name = item.name : name = item.species;
 
     dinoName.textContent = name;
     gridItem.className = 'grid-item';
     dinoImg.src = `./images/${item.species ? item.species : 'human'}.png`;
-    fact.textContent = itemLabel;
+        fact.textContent = itemLabel;
 
     gridItem.appendChild(dinoName);
     gridItem.appendChild(dinoImg);
@@ -169,24 +179,25 @@ document.getElementById('btn').addEventListener('click', function(e) {
 
     const grid = document.getElementById('grid');
     const human = Human();
-    let finalGrid = [];
-
     const humanCard = createCard(human);
+    const fragment = document.createDocumentFragment();
 
+    let finalGrid = [];
     let dinosaur = undefined;
     let gridItems = undefined;
+
     dinosData.Dinos.forEach((dino) => {
         dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
         gridItems = createCard(dinosaur, randomizeDinoFacts(dinosaur, human));
         finalGrid.push(gridItems);
     });
 
-    const fragment = document.createDocumentFragment();
     finalGrid.splice(4, 0, humanCard);
 
     for (item of finalGrid) {
         fragment.appendChild(item);
     }
+
     grid.appendChild(fragment); 
 
 });
