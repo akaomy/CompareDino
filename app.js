@@ -93,14 +93,10 @@ function Dino(species, weight, height, diet, fact) {
         // compares dino's weight in lbs against user's weight in lbs
         compareByWeight: function (human) {
             const times = Math.round((this.weight / human.weight) * 10) / 10;
-
             if (this.species === 'Pigeon') {
                 return `${this.fact}`
-
             } else {
-
             const result = this.weight > human.weight ?
-
                 `${this.species} is heavier ${times} times than ${human.name}` :
                 `${this.species} is ligher ${times} times than ${human.name}`;
                 return result;
@@ -122,7 +118,6 @@ function Dino(species, weight, height, diet, fact) {
 
         // returns sentence that annonces dino's diet vs user's diet
         compareByDiet: function (human) {
-
             return `${this.species} is ${this.diet} and ${human.name} is ${human.diet.toLowerCase()}`;
         }
     }
@@ -192,7 +187,7 @@ document.getElementById('btn').addEventListener('click', function(e) {
         finalGrid.push(gridItems);
     });
 
-    finalGrid.splice(4, 0, humanCard);
+    finalGrid.splice(dinosData.Dinos.length / 2, 0, humanCard);
 
     for (item of finalGrid) {
         fragment.appendChild(item);
