@@ -139,30 +139,29 @@ const randomizeDinoFacts = (dino, human) => {
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
 
-
-const createCard = (dino, randomFacts) => {
+const createCard = (item, randomFacts = '') => {
     const gridItem = document.createElement('div');
     const dinoImg = document.createElement('img');
-    const dinoName= document.createElement('h3');
+    const dinoName = document.createElement('h3');
+    const itemLabel = randomFacts;
+    const fact = document.createElement('p');
 
-    dinoName.textContent= dino.species;
+    // checks if it's a human and not a dino
+    let name = undefined;
+    'name' in item ? name = item.name : name = item.species;
+
+    dinoName.textContent = name;
     gridItem.className = 'grid-item';
-    dinoImg.src = `./images/${dino.species ? dino.species : dino.name}.png`;
-    
+    dinoImg.src = `./images/${item.species ? item.species : 'human'}.png`;
+    fact.textContent = itemLabel;
+
     gridItem.appendChild(dinoName);
     gridItem.appendChild(dinoImg);
-
-    const itemLabel = randomFacts;
-    const fact = document.createElement('p')
-    fact.textContent = itemLabel;
     gridItem.appendChild(fact); 
 
     return gridItem;
 }
 
-// extra: 
-// [] add back button that will hide grid and reveal empty form
-// [] randomize the Dinos + Pigeon positions
 
 document.getElementById('btn').addEventListener('click', function(e) { 
     e.preventDefault();
@@ -172,16 +171,7 @@ document.getElementById('btn').addEventListener('click', function(e) {
     const human = Human();
     let finalGrid = [];
 
-    const humanCard = document.createElement('div');
-    const humanImage = document.createElement('img');
-    const humanName = document.createElement('h3');
-
-    humanName.textContent = human.name;
-    humanCard.className = 'grid-item';
-    humanImage.src = `./images/human.png`;
-
-    humanCard.appendChild(humanName);
-    humanCard.appendChild(humanImage);
+    const humanCard = createCard(human);
 
     let dinosaur = undefined;
     let gridItems = undefined;
