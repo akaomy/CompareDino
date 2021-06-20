@@ -89,28 +89,31 @@ function Dino(species, weight, height, diet, fact) {
         weight,
         height,
         diet,
+        // compares dino's weight in lbs against user's weight in lbs
         compareByWeight: function (human) {
             const times = Math.round((this.weight / human.weight) * 10) / 10;
             if (this.species === 'Pigeon') {
                 return `${this.fact}`
             } else {
-                let result = this.weight > human.weight ?
+            const result = this.weight > human.weight ?
                 `${this.species} is heavier ${times} times than ${human.name}` :
                 `${this.species} is ligher ${times} times than ${human.name}`;
                 return result;
             }
         },
+        // compares dino's height in inches against user's weight in inches
         compareByHeight: function (human) {
             const times = Math.round((this.height / human.height) * 10) / 10;
             if (this.species === 'Pigeon') {
                 return `${this.fact}`
             } else {
-            let result = this.height > human.height ?
+            const result = this.height > human.height ?
                 `${this.species} is higher ${times} times than ${human.name}` :
                 `${this.species} is shorter ${times} times than ${human.name}`;
                 return result;
             }
         },
+        // returns sentence that annonces dino's diet vs user's diet
         compareByDiet: function (human) {
             return `${this.species} is ${this.diet} and ${human.name} is ${human.diet.toLowerCase()}`;
         }
@@ -118,18 +121,21 @@ function Dino(species, weight, height, diet, fact) {
 }
 
 function Human() {
-    let name = document.getElementById('name').value;
-    let weight = document.getElementById('weight').value;
-    let diet = document.getElementById('diet').value;
-    let height = Math.round((parseInt(document.getElementById('feet').value) * 12) 
+    const name = document.getElementById('name').value;
+    const weight = document.getElementById('weight').value;
+    const diet = document.getElementById('diet').value;
+    const height = Math.round((parseInt(document.getElementById('feet').value) * 12) 
     / parseInt(document.getElementById('inches').value)) ;
     
     return { name, height, weight, diet } 
 }
 
+// creates spearate function where dino's information 
+// about its compared weight, height and diet with human's info
+// is returned as an array of random facts
 const randomizeDinoFacts = (dino, human) => {
     let dinosFactsArr = [];
-    let dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
+    const dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
     dinosFactsArr.push(dinosaur.compareByWeight(human), dinosaur.compareByHeight(human), dinosaur.compareByDiet(human), dinosaur.fact);
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
@@ -138,21 +144,25 @@ const createCard = (dino, randomFacts) => {
     const gridItem = document.createElement('div');
     gridItem.className = 'grid-item';
 
-    const dinoName= document.createElement("h3");
+    const dinoName= document.createElement('h3');
     dinoName.textContent= dino.species;
 
-    const dinoImg = document.createElement("img");
+    const dinoImg = document.createElement('img');
     dinoImg.src = `./images/${dino.species ? dino.species : dino.name}.png`;
     gridItem.appendChild(dinoName);
     gridItem.appendChild(dinoImg);
 
     const itemLabel = randomFacts;
-    let fact = document.createElement("p")
+    const fact = document.createElement('p')
     fact.textContent = itemLabel;
     gridItem.appendChild(fact); 
 
     return gridItem;
 }
+
+// extra: 
+// [] add back button that will hide grid and reveal empty form
+// [] randomize the Dinos + Pigeon positions
 
 document.getElementById('btn').addEventListener('click', function(e) { 
     e.preventDefault();
@@ -174,13 +184,13 @@ document.getElementById('btn').addEventListener('click', function(e) {
     humanCard.appendChild(humanImage);
 
     dinosData.Dinos.forEach((dino) => {
-        let gridItems = createCard(dino, randomizeDinoFacts(dino, human));
+        const gridItems = createCard(dino, randomizeDinoFacts(dino, human));
         finalGrid.push(gridItems);
     });
 
     const fragment = document.createDocumentFragment();
     finalGrid.splice(4, 0, humanCard);
-    console.log(finalGrid);
+
     for (item of finalGrid) {
         fragment.appendChild(item);
     }
