@@ -135,20 +135,20 @@ function Human() {
 // is returned as an array of random facts
 const randomizeDinoFacts = (dino, human) => {
     let dinosFactsArr = [];
-    const dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
-    dinosFactsArr.push(dinosaur.compareByWeight(human), dinosaur.compareByHeight(human), dinosaur.compareByDiet(human), dinosaur.fact);
+    dinosFactsArr.push(dino.compareByWeight(human), dino.compareByHeight(human), dino.compareByDiet(human), dino.fact);
     return dinosFactsArr[Math.floor(Math.random() * 4)];
 }
 
+
 const createCard = (dino, randomFacts) => {
     const gridItem = document.createElement('div');
-    gridItem.className = 'grid-item';
-
-    const dinoName= document.createElement('h3');
-    dinoName.textContent= dino.species;
-
     const dinoImg = document.createElement('img');
+    const dinoName= document.createElement('h3');
+
+    dinoName.textContent= dino.species;
+    gridItem.className = 'grid-item';
     dinoImg.src = `./images/${dino.species ? dino.species : dino.name}.png`;
+    
     gridItem.appendChild(dinoName);
     gridItem.appendChild(dinoImg);
 
@@ -183,8 +183,11 @@ document.getElementById('btn').addEventListener('click', function(e) {
     humanCard.appendChild(humanName);
     humanCard.appendChild(humanImage);
 
+    let dinosaur = undefined;
+    let gridItems = undefined;
     dinosData.Dinos.forEach((dino) => {
-        const gridItems = createCard(dino, randomizeDinoFacts(dino, human));
+        dinosaur = Dino(dino.species, dino.weight, dino.height, dino.diet, dino.fact);
+        gridItems = createCard(dinosaur, randomizeDinoFacts(dinosaur, human));
         finalGrid.push(gridItems);
     });
 
